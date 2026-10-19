@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#24170f">
+  <title>ZÉA Chess | The Royal Game</title>
+  <meta
+    name="description"
+    content="Play classic chess with a friend or challenge the computer in ZÉA Chess."
+  >
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ZÉA Chess home">
+        <span class="brand-icon">♞</span>
+        <span>
+          <strong>ZÉA <span>CHESS</span></strong>
+          <small>THE ROYAL GAME</small>
+        </span>
+      </a>
+
+      <div class="topbar-right">
+        <span class="status-dot"></span>
+        <span class="status-label">LOCAL GAME</span>
+        <button
+          class="icon-button"
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle theme"
+          title="Toggle theme"
+        >☼</button>
+      </div>
+    </header>
+
+    <main class="game-layout">
+
+      <section class="play-area">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">YOUR NEXT MOVE AWAITS</p>
+            <h1>Play chess.</h1>
+            <p class="subtitle">A timeless game. A thoughtful move.</p>
+          </div>
+
+          <div class="game-badge">
+            <span>♟</span> CLASSIC
+          </div>
+        </div>
+
+        <div class="player-card opponent-card">
+          <div class="player-avatar" id="opponent-avatar">♚</div>
+          <div class="player-details">
+            <strong id="opponent-name">Black</strong>
+            <span id="opponent-description">Your opponent</span>
+          </div>
+          <div class="player-clock" id="black-clock">10:00</div>
+        </div>
+
+        <div class="board-frame">
+          <div class="board-files" aria-hidden="true">
+            <span>a</span><span>b</span><span>c</span><span>d</span>
+            <span>e</span><span>f</span><span>g</span><span>h</span>
+          </div>
+
+          <div class="board-with-ranks">
+            <div class="board-ranks" aria-hidden="true">
+              <span>8</span><span>7</span><span>6</span><span>5</span>
+              <span>4</span><span>3</span><span>2</span><span>1</span>
+            </div>
+
+            <div
+              class="chessboard"
+              id="chessboard"
+              role="grid"
+              aria-label="Chessboard"
+            ></div>
+          </div>
+        </div>
+
+        <div class="player-card current-player-card">
+          <div class="player-avatar white-avatar" id="current-avatar">♔</div>
+          <div class="player-details">
+            <strong id="current-name">White</strong>
+            <span id="current-description">Your turn</span>
+          </div>
+          <div class="player-clock" id="white-clock">10:00</div>
+        </div>
+
+        <div class="game-message" id="game-message" role="status" aria-live="polite">
+          White to move
+        </div>
+
+        <div class="board-controls">
+          <button class="secondary-button" id="undo-button" type="button">
+            <span>↶</span> Undo
+          </button>
+          <button class="secondary-button" id="flip-button" type="button">
+            <span>⇅</span> Flip board
+          </button>
+          <button class="secondary-button" id="resign-button" type="button">
+            Resign
+          </button>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+
+        <section class="panel mode-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">GAME SETUP</p>
+              <h2>New game</h2>
+            </div>
+            <span class="panel-icon">⚙</span>
+          </div>
+
+          <label for="game-mode">Play mode</label>
+          <select id="game-mode">
+            <option value="computer">Play against computer</option>
+            <option value="local">Two players locally</option>
+          </select>
+
+          <div id="computer-settings">
+            <label for="player-color">Your color</label>
+            <select id="player-color">
+              <option value="w">White — move first</option>
+              <option value="b">Black — move second</option>
+            </select>
+
+            <label for="difficulty">Computer difficulty</label>
+            <select id="difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+
+          <label for="time-control">Time control</label>
+          <select id="time-control">
+            <option value="300">5 minutes</option>
+            <option value="600" selected>10 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="0">Unlimited</option>
+          </select>
+
+          <button class="primary-button" id="new-game-button" type="button">
+            <span>♞</span> Start new game
+          </button>
+        </section>
+
+        <section class="panel move-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">THE GAME SO FAR</p>
+              <h2>Move history</h2>
+            </div>
+            <span class="move-count" id="move-count">0 moves</span>
+          </div>
+
+          <div class="move-list" id="move-list">
+            <div class="empty-state">
+              <span class="empty-icon">♙</span>
+              <p>Your moves will appear here.</p>
+              <small>Make the first move to begin.</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel captured-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">PIECES TAKEN</p>
+              <h2>Captured pieces</h2>
+            </div>
+          </div>
+
+          <div class="captured-group">
+            <span class="captured-label">White</span>
+            <div class="captured-pieces" id="white-captured">—</div>
+          </div>
+
+          <div class="captured-group">
+            <span class="captured-label">Black</span>
+            <div class="captured-pieces" id="black-captured">—</div>
+          </div>
+        </section>
+
+        <div class="tip-card">
+          <span class="tip-icon">✦</span>
+          <div>
+            <strong>A little strategy</strong>
+            <p>Control the center, develop your pieces, and keep your king safe.</p>
+          </div>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>♞ ZÉA CHESS</span>
+      <span>MADE FOR THE LOVE OF THE GAME</span>
+    </footer>
+  </div>
+
+  <dialog id="promotion-dialog" class="promotion-dialog">
+    <form method="dialog">
+      <h2>Promote your pawn</h2>
+      <p>Choose a piece.</p>
+      <div class="promotion-options">
+        <button type="button" data-piece="q" aria-label="Promote to queen">♕</button>
+        <button type="button" data-piece="r" aria-label="Promote to rook">♖</button>
+        <button type="button" data-piece="b" aria-label="Promote to bishop">♗</button>
+        <button type="button" data-piece="n" aria-label="Promote to knight">♘</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="result-dialog" class="result-dialog">
+    <div class="result-content">
+      <span class="result-icon" id="result-icon">♔</span>
+      <p class="eyebrow">GAME COMPLETE</p>
+      <h2 id="result-title">Game over</h2>
+      <p id="result-description">Thanks for playing.</p>
+      <button class="primary-button" id="play-again-button" type="button">
+        Play again
+      </button>
+      <button class="secondary-button" id="close-result-button" type="button">
+        Review board
+      </button>
+    </div>
+  </dialog>
+
+</body>
+</html>
